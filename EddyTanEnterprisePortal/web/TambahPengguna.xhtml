@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>EDDY TAN ENTERPRISE</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <table border="0" width="100%">
+                <tr>
+                    <td colspan="4" >
+                        <font size="4"><b>Pengguna Baru</b></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" >
+                        <hr/>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="10%">Login</td>
+                    <td colspan="3"><h:inputText id="inputUsername" value="#{userBean.newUser}" /></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td colspan="3"><h:inputSecret value="#{userBean.newPassword}" id="inputPassword" /></td>
+                </tr>
+                <tr>
+                    <td>Jam Kerja</td>
+                    <td colspan="3">
+                        <h:inputText value="#{userBean.jamKerjaStart}"/>
+                        &nbsp; - &nbsp;
+                        <h:inputText value="#{userBean.jamKerjaEnd}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" height="2">
+                        <hr/>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td colspan="4" height="10" valign="bottom">
+                        <font size="4"><b>Hak Akses</b></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" height="2">
+                        <hr/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" width="50%" valign="top" style="visibility: #{portalBean.dybestEnabled}">
+                        <h:panelGroup rendered="#{portalBean.dybestEnabled}">
+                            <table width="100%" border="0" rules="none" frame="box" >
+                                <tr style="border-style: solid;">
+                                    <td colspan="2">
+                                        <font size="4"><b>DYBEST</b></font>
+                                    </td>
+                                    <td align="right">
+                                        <h:commandLink value="#{userBean.check}" 
+                                                       actionListener="#{userBean.checkAllDb(event)}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Point Of Sales</b></td>
+                                    <td>
+                                        <h:selectManyCheckbox value="#{userBean.posAuthDb}" 
+                                                              layout="lineDirection" id="posAuth">
+                                            <f:selectItems value="#{userBean.generalOpt}" />
+                                        </h:selectManyCheckbox>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.posCatCh}" 
+                                                              layout="pageDirection" >
+                                            <f:selectItems value="#{userBean.posCat}"/>
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Payroll</b></td>
+                                    <td>
+                                       
+                                        <h:selectManyCheckbox value="#{userBean.payrollAuthDb}" layout="lineDirection">
+                                            <f:selectItems value="#{userBean.generalOpt}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.payrollCatCh}" layout="pageDirection">
+                                            <f:selectItems value="#{userBean.payrollCat}" />
+                                        </h:selectManyCheckbox>         
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Buku Besar</b></td>
+                                    <td>
+                                        
+                                        <h:selectManyCheckbox value="#{userBean.glAuthDb}" layout="lineDirection">
+                                            <f:selectItems value="#{userBean.generalOpt}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.bbCatCh}" layout="pageDirection">
+                                            <f:selectItems value="#{userBean.bbCat}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectBooleanCheckbox value="#{userBean.addUserDb}"/>
+                                        <b>Tambah Pengguna</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+                    <td colspan="2" valign="top" width="50%">
+                        <h:panelGroup rendered="#{portalBean.velvetEnabled}">
+                            <table width="100%" border="0" rules="none" frame="box" >
+                                <tr style="border-style: solid;">
+                                    <td colspan="2">
+                                        <font size="4"><b>VELVET</b></font>
+                                    </td>
+                                    <td align="right">
+                                        <h:commandLink value="#{userBean.checkVv}" 
+                                                       actionListener="#{userBean.checkAllVv(event)}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Point Of Sales</b></td>
+                                    <td>
+                                        
+                                        <h:selectManyCheckbox value="#{userBean.posAuthVl}" layout="lineDirection">
+                                            <f:selectItems value="#{userBean.generalOptVelvet}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.posCatChVelvet}" layout="pageDirection">
+                                            <f:selectItems value="#{userBean.posCatVelvet}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Payroll</b></td>
+                                    <td>
+                                        
+                                        <h:selectManyCheckbox value="#{userBean.payrollAuthVl}" layout="lineDirection">
+                                            <f:selectItems value="#{userBean.generalOptVelvet}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.payrollCatChVelvet}" layout="pageDirection">
+                                            <f:selectItems value="#{userBean.payrollCatVelvet}" />
+                                        </h:selectManyCheckbox>         
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Buku Besar</b></td>
+                                    <td>
+                                        
+                                        <h:selectManyCheckbox value="#{userBean.glAuthVl}" layout="lineDirection">
+                                            <f:selectItems value="#{userBean.generalOptVelvet}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <h:selectManyCheckbox value="#{userBean.bbCatChVelvet}" layout="pageDirection">
+                                            <f:selectItems value="#{userBean.bbCatVelvet}" />
+                                        </h:selectManyCheckbox>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><h:selectBooleanCheckbox value="#{userBean.addUserVl}"/>
+                                        <b>Tambah Pengguna</b>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <h:commandButton value="Buat Pengguna" action="#{userBean.addUser}"/>
+                    </td>
+                    <td align="left">
+                        <h:commandButton value="Kembali" action="user" immediate="true"/>
+                    </td>
+                </tr>
+            </table>
+        </h:form>
+    </h:body>
+</html>
+

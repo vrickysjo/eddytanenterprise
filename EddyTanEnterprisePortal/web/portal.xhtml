@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>EDDY TAN ENTERPRISE</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <br/>
+            <center>
+                <table border="0" width="75%" height="600" cellpadding="5" cellspacing="5" 
+                       rules="none" frame="box" bgcolor="#5B9BD5">
+                    <tr valign="middle">
+                        <td colspan="2" bgcolor="white" height="100">
+                            <table border="0" width="100%" height="10">
+                                <tr>
+                                    <td align="left"><h1>Eddy Tan Enterprise</h1></td>
+                                    <td align="right">Welcome, #{portalBean.loggedinUser.userId} | 
+                                        <h:commandLink value="Log Out" action="#{portalBean.logout()}" /></td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="20%" valign="Top" height="15" align="center" rowspan="2">
+                            <b>
+                                <h:panelGrid columns="1" style="line-height: 4;text-align: center;">
+                                    <h:commandLink rendered="#{portalBean.dybestEnabled}" value="DYBEST"
+                                                   action="#{portalBean.redirect('dybest')}"           
+                                                   style="text-decoration: none; color: white;" />
+                                    <h:commandLink rendered="#{portalBean.velvetEnabled}"
+                                                   value="VELVET" 
+                                                   target="bodyFrame" style="text-decoration: none; color: white;"/>
+                                </h:panelGrid>
+
+                            </b>
+                        </td>
+                        <td bgcolor="white" align="center" rowspan="2">
+                            <iframe name="bodyFrame" width="100%" height="100%" src="user.xhtml"/>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </center>
+        </h:form>
+    </h:body>
+</html>
+

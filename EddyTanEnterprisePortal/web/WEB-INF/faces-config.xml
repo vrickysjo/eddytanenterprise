@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <managed-bean>
+        <managed-bean-name>portalBean</managed-bean-name>
+        <managed-bean-class>ManagedBean.PortalBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>authQuery</property-name>
+            <value>select * from login where userid = ? and password = ?</value>
+        </managed-property>
+        <managed-property>
+            <property-name>userListQuery</property-name>
+            <value>
+                select l.userid, max(login_date), dybest,velvet,status
+                from login l left join login_hist lh on l.userid = lh.userid
+                where l.dybest = ?
+                group by l.userid, l.dybest, l.velvet, l.status
+                UNION
+                select l.userid, max(login_date), dybest,velvet,status
+                from login l left join login_hist lh on l.userid = lh.userid
+                where l.velvet = ?
+                group by l.userid, l.dybest, l.velvet, l.status
+
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>insertLoginHist</property-name>
+            <value>
+                insert into login_hist (sessionid, userid, login_date) 
+                values (?,?,now())
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>latestSession</property-name>
+            <value>
+                select sessionid from login_hist where userid = ? and logout_date is null
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>updateLoginHist</property-name>
+            <value>
+                update login_hist set logout_date = now() where userid = ? and sessionid = ?
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>updateUserStat</property-name>
+            <value>
+                update login set status = ?, last_upd_date = now() 
+                where userid = ?
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbUrl</property-name>
+            <value>jdbc:mysql://localhost/eddytanenterprisedb</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbUsername</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbPassword</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dybestURL</property-name>
+            <value>http://localhost:8080/DYBESTWeb/faces/index.xhtml</value>
+        </managed-property>
+        <managed-property>
+            <property-name>velvetURL</property-name>
+            <value>http://localhost:8080/VELVETWeb/faces/index.xhtml</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>userBean</managed-bean-name>
+        <managed-bean-class>ManagedBean.UserBean</managed-bean-class>
+        <managed-bean-scope>application</managed-bean-scope>
+    
+        <managed-property>
+            <property-name>lovQuery</property-name>
+            <value>
+                select * from lov
+            </value>
+        </managed-property>
+        
+        <managed-property>
+            <property-name>insertLoginSql</property-name>
+            <value>
+                Insert into login (userid, password, status, portal, dybest, 
+                velvet, created_date, last_upd_date,effectivestart, effectiveend)
+                values (?,?,?,?,?,?,now(),now(),?,?)
+            </value>
+        </managed-property>
+        
+        <managed-property>
+            <property-name>insertHakAksesSql</property-name>
+            <value>
+                Insert into hakakses 
+                (userid, page, input, ubah, created_date, last_upd_date)
+                values (?,?,?,?,now(),now())
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>resetUserSql</property-name>
+            <value>
+                update login set password = ?, status = ? 
+                where userid = ?
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>deleteUserSql</property-name>
+            <value>
+                delete from login where userid = ?
+            </value>
+        </managed-property>
+        
+        <managed-property>
+            <property-name>deleteAccessRightsSql</property-name>
+            <value>
+                delete from hakakses where userid = ?
+            </value>
+        </managed-property>
+        
+        <managed-property>
+            <property-name>plUrl</property-name>
+            <value>jdbc:mysql://localhost/eddytanenterprisedb</value>
+        </managed-property>
+        <managed-property>
+            <property-name>plUsername</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>plPassword</property-name>
+            <value>admin</value>
+        </managed-property>
+    
+        <managed-property>
+            <property-name>dbUrl</property-name>
+            <value>jdbc:mysql://localhost/dybest_db</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbUsername</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbPassword</property-name>
+            <value>admin</value>
+        </managed-property>
+    
+        <managed-property>
+            <property-name>vvUrl</property-name>
+            <value>jdbc:mysql://localhost/velvet_db</value>
+        </managed-property>
+        <managed-property>
+            <property-name>vvUsername</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>vvPassword</property-name>
+            <value>admin</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>logOutBean</managed-bean-name>
+        <managed-bean-class>ManagedBean.LogOutBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>updateLoginHist</property-name>
+            <value>
+                update login_hist set logout_date = now() where userid = ? and sessionid = ?
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>updateUserStat</property-name>
+            <value>
+                update login set status = ?, last_upd_date = now() 
+                where userid = ?
+            </value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbUrl</property-name>
+            <value>jdbc:mysql://localhost/eddytanenterprisedb</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbUsername</property-name>
+            <value>admin</value>
+        </managed-property>
+        <managed-property>
+            <property-name>dbPassword</property-name>
+            <value>admin</value>
+        </managed-property>
+    </managed-bean>
+</faces-config>
